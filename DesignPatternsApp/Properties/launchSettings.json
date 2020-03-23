@@ -1,0 +1,8 @@
+{
+  "profiles": {
+    "DesignPatternsApp": {
+      "commandName": "Project",
+      "commandLineArgs": "-factoryMethod"
+    }
+  }
+}
