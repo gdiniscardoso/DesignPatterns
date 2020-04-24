@@ -1,0 +1,8 @@
+{
+  "profiles": {
+    "DesignPatternsApplication": {
+      "commandName": "Project",
+      "commandLineArgs": "-cor"
+    }
+  }
+}

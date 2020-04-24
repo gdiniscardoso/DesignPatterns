@@ -6,7 +6,16 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="Microsoft.CodeAnalysis.FxCopAnalyzers" Version="3.0.0-beta3.final">
+      <PrivateAssets>all</PrivateAssets>
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+    </PackageReference>
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\BehavioralPatterns\BehavioralPatterns.csproj" />
     <ProjectReference Include="..\DesignPatterns\CreationalPatterns.csproj" />
+    <ProjectReference Include="..\StructuralPatterns\StructuralPatterns.csproj" />
   </ItemGroup>
 
 </Project>
