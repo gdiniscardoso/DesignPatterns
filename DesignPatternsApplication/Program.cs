@@ -3,6 +3,10 @@ using BehavioralPatterns.Command;
 using BehavioralPatterns.Iterator;
 using BehavioralPatterns.Mediator;
 using BehavioralPatterns.Memento;
+using BehavioralPatterns.Observer;
+using BehavioralPatterns.State;
+using BehavioralPatterns.Strategy;
+using BehavioralPatterns.Visitor;
 using CreationalPatterns.AbstractFactory;
 using CreationalPatterns.Builder;
 using CreationalPatterns.FactoryMethod;
@@ -80,10 +84,99 @@ namespace DesignPatternsApplication
                     case "-memento":
                         DoMemento();
                         break;
+                    case "-observer":
+                        DoObserver();
+                        break;
+                    case "-state":
+                        DoState();
+                        break;
+                    case "-strategy":
+                        DoStrategy();
+                        break;
+                    case "-templatemethod":
+                        DoTemplateMethod();
+                        break;
+                    case "-visitor":
+                        DoVisitor();
+                        break;
                     default:
                         break;
                 }
             }
+        }
+
+        private static void DoVisitor()
+        {
+            List<IComponent> components = new List<IComponent>
+            {
+                new ConcreteComponentA(),
+                new ConcreteComponentB()
+            };
+
+            Console.WriteLine("The client code works with all visitors via the base Visitor interface:");
+            var visitor1 = new ConcreteVisitor1();
+            BehavioralPatterns.Visitor.Client.ClientCode(components, visitor1);
+
+            Console.WriteLine();
+
+            Console.WriteLine("It allows the same client code to work with different types of visitors:");
+            var visitor2 = new ConcreteVisitor2();
+            BehavioralPatterns.Visitor.Client.ClientCode(components, visitor2);
+        }
+
+        private static void DoTemplateMethod()
+        {
+            Console.WriteLine("Same client code can work with different subclasses:");
+
+            BehavioralPatterns.TemplateMethod.Client.ClientCode(new BehavioralPatterns.TemplateMethod.ConcreteClassA());
+
+            Console.Write("\n");
+
+            Console.WriteLine("Same client code can work with different subclasses:");
+            BehavioralPatterns.TemplateMethod.Client.ClientCode(new BehavioralPatterns.TemplateMethod.ConcreteClassB());
+        }
+
+        private static void DoStrategy()
+        {
+            // The client code picks a concrete strategy and passes it to the
+            // context. The client should be aware of the differences between
+            // strategies in order to make the right choice.
+            var context = new BehavioralPatterns.Strategy.Context();
+
+            Console.WriteLine("Client: Strategy is set to normal sorting.");
+            context.SetStrategy(new ConcreteStrategyA());
+            context.DoSomeBusinessLogic();
+
+            Console.WriteLine();
+
+            Console.WriteLine("Client: Strategy is set to reverse sorting.");
+            context.SetStrategy(new ConcreteStrategyB());
+            context.DoSomeBusinessLogic();
+        }
+
+        private static void DoState()
+        {
+            var context = new BehavioralPatterns.State.Context(new ConcreteStateA());
+            context.Request1();
+            context.Request2();
+        }
+
+        private static void DoObserver()
+        {
+            // The client code.
+            var subject = new Subject();
+            var observerA = new ConcreteObserverA();
+            subject.Attach(observerA);
+
+            var observerB = new ConcreteObserverB();
+            subject.Attach(observerB);
+
+            subject.SomeBusinessLogic();
+            subject.SomeBusinessLogic();
+
+            subject.Dettach(observerB);
+
+            subject.SomeBusinessLogic();
         }
 
         private static void DoMemento()
